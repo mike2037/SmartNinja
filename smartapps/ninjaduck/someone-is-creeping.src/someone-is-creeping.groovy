@@ -20,7 +20,7 @@ definition(
 		namespace: "NinjaDuck",
 		author: "NinjaDuck",
 		description: "Receive notifications when something happens and you are not there.",
-		category: "Convenience",
+		category: "Safety & Security",
 		iconUrl: "https://raw.githubusercontent.com/mike2037/SmartNinja/master/ninjaduck1.jpg",
 		iconX2Url: "https://raw.githubusercontent.com/mike2037/SmartNinja/master/ninjaduck2.jpg",
 		pausable: true
