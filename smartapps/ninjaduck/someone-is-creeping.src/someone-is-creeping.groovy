@@ -23,6 +23,7 @@ definition(
 		category: "Safety & Security",
 		iconUrl: "https://raw.githubusercontent.com/mike2037/SmartNinja/master/ninjaduck1.jpg",
 		iconX2Url: "https://raw.githubusercontent.com/mike2037/SmartNinja/master/ninjaduck2.jpg",
+   		iconX3Url: "https://raw.githubusercontent.com/mike2037/SmartNinja/master/ninjaduck3.jpg",        
 		pausable: true
 )
 
