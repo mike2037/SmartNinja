@@ -22,8 +22,8 @@ definition(
     author: "NinjaDuck",
     description: "Opend or closes other valves based on the state of one.",
     category: "Safety & Security",
-    iconUrl: "https://s3.amazonaws.com/smartapp-icons/Samsung/home.png",
-    iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Samsung/home@2x.png"
+    iconUrl: "https://raw.githubusercontent.com/mike2037/SmartNinja/master/ninjaduck1.jpg",
+    iconX2Url: "https://raw.githubusercontent.com/mike2037/SmartNinja/master/ninjaduck2.jpg"
 )
 
 preferences {
