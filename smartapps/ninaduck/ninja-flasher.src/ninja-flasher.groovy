@@ -36,7 +36,7 @@ preferences {
 		input "thelock", "capability.lock", title: "Which?", required: true, multiple: false        
 	}
 	section("Then flash..."){
-    	input "switches", "capability.colorControl", title: "Colored Light", required: true, multiple: true
+    	input "theswitch", "capability.colorControl", title: "Colored Light", required: true, multiple: false
 		input "numFlashes", "number", title: "This number of times (default 3)", required: false
 	}
 	section("Time settings in milliseconds (optional)..."){
@@ -113,47 +113,28 @@ def lockHandler(evt) {
     flashLights()
 }
 
+
+
 private flashLights() {
-	def doFlash = true
-	def onFor = onFor ?: 1000
-	def offFor = offFor ?: 1000
-	def numFlashes = numFlashes ?: 3
+    def initialdim = theswitch.currentValue("level")
+    def initialhue = theswitch.currentValue("hue")
+    def initialsaturation= theswitch.currentValue("saturation")
+    def oldValue = [hue: hueLevel, saturation: saturationLevel, level: dimLevel as Integer]
+    def oldOff = (theswitch.currentValue("switch") == "off")
+    log.debug "DIM: $initialdim, HUE: $initialhue,  SATURATION: $initialsaturation"
 
-	log.debug "LAST ACTIVATED IS: ${state.lastActivated}"
-	if (state.lastActivated) {
-		def elapsed = now() - state.lastActivated
-		def sequenceTime = (numFlashes + 1) * (onFor + offFor)
-		doFlash = elapsed > sequenceTime
-		log.debug "DO FLASH: $doFlash, ELAPSED: $elapsed, LAST ACTIVATED: ${state.lastActivated}"
-	}
-
-	if (doFlash) {
-		log.debug "FLASHING $numFlashes times"
-		state.lastActivated = now()
-		log.debug "LAST ACTIVATED SET TO: ${state.lastActivated}"
-		def initialActionOn = switches.collect{it.currentSwitch != "on"}
-		def delay = 0L
-		numFlashes.times {
-			log.trace "Switch on after  $delay msec"
-			switches.eachWithIndex {s, i ->
-				if (initialActionOn[i]) {
-					s.on(delay: delay)
-				}
-				else {
-					s.off(delay:delay)
-				}
-			}
-			delay += onFor
-			log.trace "Switch off after $delay msec"
-			switches.eachWithIndex {s, i ->
-				if (initialActionOn[i]) {
-					s.off(delay: delay)
-				}
-				else {
-					s.on(delay:delay)
-				}
-			}
-			delay += offFor
-		}
-	}
+    def hueLevel = 0
+    def saturationLevel = 100
+    def dimLevel = 100
+    def newValue = [hue: hueLevel, saturation: saturationLevel, level: dimLevel as Integer]
+    
+    
+    theswitch.setColor(newValue, [delay:1000])
+    theswitch.setColor(oldValue, [delay:2000])
+    theswitch.setColor(newValue, [delay:3000])
+    theswitch.setColor(oldValue, [delay:4000])
+    theswitch.setColor(newValue, [delay:5000])
+    theswitch.setColor(oldValue, [delay:6000])
+    
+    if (oldOff) {theswitch.off([delay:7000]) }
 }
